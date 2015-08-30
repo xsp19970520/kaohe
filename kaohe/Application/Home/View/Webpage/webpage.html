@@ -1,0 +1,159 @@
+<html>
+<head>
+	<meta charset="utf-8"/>
+      <title>校职工权限管理系统</title>
+<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-ui"></script>
+<link href="http://www.francescomalagrino.com/BootstrapPageGenerator/3/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript">
+
+
+	function funcAdd(){
+	if(confirm("你确定提升他的权限么？"))
+		{
+			var name=document.getElementById("name").value;
+			var role=document.getElementById("role").value;
+			window.location.href = "__URL__/roleAdd?action=add&name=" + name"&role=" + role;
+		}
+	}
+	function funcSubtract(){
+		if(confirm("你确定降低他的权限么？"))
+			{
+				var name=document.getElementById("name").value;
+				var role=document.getElementById("role").value;
+				window.location.href = "__URL__/roleSubtract?action=add&name=" + name"&role=" + role;
+			}
+		}
+
+	function funcout(){
+		this.location = "__APP__/Index/index";
+	}
+	
+</script>
+
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span11">
+			<h3>
+				权限管理系统
+			</h3>
+
+			<div class="row-fluid">
+				<div class="span3">
+					<ul class="nav nav-list well">
+						<li class="nav-header">
+							职务列表
+						</li>
+						<li >
+							<a href="__URL__/webpage?level=9999&page=9999">首页</a>
+						</li>
+						<li >
+							<a href="__URL__/webpage?level=1&page=1">校长</a>
+						</li>
+						<li >
+							<a href="__URL__/webpage?level=2&page=1">科研人员</a>
+						</li>
+						<li>
+							<a href="__URL__/webpage?level=3&page=1">教师</a>
+						</li>
+						<li>
+							<a href="__URL__/webpage?level=4&page=1">校工</a>
+						</li>
+						
+					</ul>
+				</div>
+				<if condition="$page eq 9999">
+					<div class="span9">
+					<table class="table table-hover">
+						<tr>
+								<th>
+									欢迎使用权限管理系统
+								</th>
+							</tr>
+						</table>
+					</div>
+					<else />
+					<div class="span9">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+
+								<th>
+									姓名
+								</th>
+								<th>
+									权限等级
+								</th>
+							</tr>
+						</thead>
+						
+						<volist name="list" id="vo">
+						<tbody>
+							<tr class="success">
+								
+									<td>
+										{$vo.username}
+										
+									</td>
+									<td>
+										{$vo.role}
+									</td> 
+									<td>
+											
+											<button  onClick="javascript:funcAdd();" class="btn btn-success" type="button">提高权限</button>
+											<input id="name"  type="text"  value="{$vo.username}"style="display:none;"/>
+											<input id="role"  type="text"  value="{$vo.role}"style="display:none;"/>
+											<button  onClick="javascript:funcSubtract();" class="btn btn-warning" type="button">降低权限</button>
+										
+								</td>
+							</tr>
+
+						</tbody>
+						</volist>
+						
+					</table>
+
+					<div class="pagination pagination-centered">
+						<ul>
+							<li>
+									<a href="__URL__/webpage?level={$level}&page=1">第一页</a>
+								</li>
+							<if condition="$page gt 1">
+								<li>
+									<a href="__URL__/webpage?level={$level}&page={$page-1}">上一页</a>
+								</li>
+							</if>
+							<for start="$page" end="$page+1">
+							<li>
+								<a href="__URL__/webpage?level={$level}&page={$i}">{$i}</a>
+							</li>
+							</for>
+							<if condition="$page lt $pageNumber">
+								<li>
+									<a href="__URL__/webpage?level={$level}&page={$page+1}">下一页</a>
+								</li>
+							</if>
+							<li>
+									<a href="__URL__/webpage?level={$level}&page={$pageNumber}">最后一页</a>
+								</li>
+						</ul>
+					</div> <a href="__APP__/Home/Register/register?level={$level}"class="btn btn-small btn-block btn-info" type="button">增加{$vo.role}</a>
+				</div>
+			</if>
+			</div>
+		</div>
+		<div class="span1">
+			 <a href="__APP__/Home/Index/index" onClick="javascript:funcout();"class="btn">退出</a>
+		</div>
+	</div>
+</div>
+
+
+
+</body>
+</html>
